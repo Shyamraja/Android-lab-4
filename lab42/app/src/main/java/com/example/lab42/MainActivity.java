@@ -2,9 +2,13 @@ package com.example.lab42;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+
+//These are dependiencis from volly for build.gradle in app module
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -15,26 +19,38 @@ import com.android.volley.toolbox.Volley;
 
 public class MainActivity extends AppCompatActivity {
 
+    TextView textView;
+    Button btn;
+    EditText EditText1;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        textView = findViewById(R.id.textView);
+        btn = findViewById(R.id.btn);
+        EditText1 = findViewById(R.id.EditText1);
 
-        //final TextView textView = (TextView) findViewById(R.id.text);
-        EditText editText;
-        final TextView textView= findViewById(R.id.textView);
+
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openweb();
+            }
+             });
+              }
+    private void openweb() {
 
 // Instantiate the RequestQueue.
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url ="http://www.google.com";
+        String url ="https://" + EditText1.getText().toString();
 
 // Request a string response from the provided URL.
         StringRequest stringRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        // Display the first 500 characters of the response string.
-                        textView.setText("Response is: "+ response.toString());
+                        textView.setText("Response is: "+ response);
                     }
                 }, new Response.ErrorListener() {
                @Override
